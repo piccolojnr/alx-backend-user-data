@@ -6,7 +6,7 @@ import logging
 import os
 import mysql.connector
 from mysql.connector.connection import MySQLConnection
-
+from typing import List, Tuple
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
@@ -32,7 +32,10 @@ class RedactingFormatter(logging.Formatter):
         )
 
 
-def filter_datum(fields, redaction, message, separator) -> str:
+def filter_datum(
+    fields: List[str], redaction: str, message: str, separator: str
+) -> str:
+    """Returns the log message obfuscated"""
     ss = "|".join(re.escape(f) for f in fields)
     pattern = rf"({ss})=.*?(?={separator}|$)"
     return re.sub(pattern, lambda m: f"{m.group(1)}={redaction}", message)
