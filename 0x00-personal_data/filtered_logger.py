@@ -39,9 +39,10 @@ def filter_datum(
     separator: str,
 ) -> str:
     """Returns the log message obfuscated"""
-    ss = "|".join(re.escape(f) for f in fields)
-    pattern = rf"({ss})=.*?(?={separator}|$)"
-    return re.sub(pattern, lambda m: f"{m.group(1)}={redaction}", message)
+    for field in fields:
+        pattern = rf"(?<={field}=).*?(?={separator}|$)"
+        message = re.sub(pattern, redaction, message)
+    return message
 
 
 def get_logger() -> logging.Logger:
