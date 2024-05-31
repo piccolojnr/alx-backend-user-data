@@ -47,13 +47,13 @@ def get_logger() -> logging.Logger:
     Returns a logging.Logger object
     """
     logger = logging.Logger("user_data")
-    logger.level = logging.INFO
+    logger.setLevel(logging.INFO)
     logger.propagate = False
     stream_handler = logging.StreamHandler()
     formatter = RedactingFormatter(fields=PII_FIELDS)
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)
-    return logger
+    return logging.getLogger("user_data")
 
 
 def get_db() -> MySQLConnection:
