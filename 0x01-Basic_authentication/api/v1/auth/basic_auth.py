@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""manage the API authentication. 
+"""manage the API authentication.
 """
 from api.v1.auth.auth import Auth
 import base64
@@ -14,7 +14,10 @@ class BasicAuth(Auth):
         Auth (_type_): _description_
     """
 
-    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(
+        self,
+        authorization_header: str,
+    ) -> str:
         """extract base64 authorization header
 
         Args:
@@ -46,7 +49,8 @@ class BasicAuth(Auth):
         ):
             return None
         try:
-            return base64.b64decode(base64_authorization_header).decode("utf-8")
+            decoded = base64.b64decode(base64_authorization_header)
+            return decoded.decode("utf-8")
         except Exception:
             return None
 
@@ -110,7 +114,8 @@ class BasicAuth(Auth):
         )
         if decoded_b64_auth_header is None:
             return None
-        user_email, user_pwd = self.extract_user_credentials(decoded_b64_auth_header)
+        data = self.extract_user_credentials(decoded_b64_auth_header)
+        user_email, user_pwd = data
         if user_email is None or user_pwd is None:
             return None
         return self.user_object_from_credentials(user_email, user_pwd)

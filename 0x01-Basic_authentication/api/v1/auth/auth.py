@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""manage the API authentication. 
+"""manage the API authentication.
 """
 
 from flask import request
