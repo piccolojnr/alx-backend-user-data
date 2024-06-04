@@ -93,11 +93,17 @@ class BasicAuth(Auth):
         ):
             return None
         User.load_from_file()
-        if User.count > 0:
-            user_list = User.search({"email": user_email})
-            for user in user_list:
-                if user.is_valid_password(user_pwd):
-                    return user
+
+        if User.count == 0:
+            return None
+
+        user_list = User.search({"email": user_email})
+        if len(user_list) == 0:
+            return None
+        user = user_list[0]
+
+        if user.is_valid_password(user_pwd):
+            return user
         return None
 
     def current_user(self, request=None) -> TypeVar("User"):
