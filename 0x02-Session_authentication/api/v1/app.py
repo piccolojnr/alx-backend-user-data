@@ -71,8 +71,9 @@ def request_filter() -> str:
     ]
     if not auth.require_auth(request.path, excluded_paths):
         return
+
     if not auth.authorization_header(request):
-        abort(401)
+        abort(403)
     current_user = auth.current_user(request)
 
     if not auth.current_user(request):
