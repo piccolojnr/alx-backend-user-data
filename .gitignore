@@ -4,3 +4,6 @@ venv/
 
 .vscode/
 .env
+
+
+a.db
