@@ -15,6 +15,11 @@ Base = declarative_base()
 
 
 class User(Base):
+    """_summary_
+
+    Args:
+        Base (_type_): _description_
+    """
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
